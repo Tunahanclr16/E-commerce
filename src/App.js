@@ -4,6 +4,7 @@ import Detail from "./Pages/Detail";
 import TopBar from "./Layout/TopBar";
 import Navbar from "./Layout/Navbar";
 import Footer from "./Layout/Footer";
+import Cart from "./Pages/Cart";
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/detail" element={<Detail />} />
+          <Route path="/cart" element={<Cart/>} />
         </Routes>
       </div>
       <Footer />
