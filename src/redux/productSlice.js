@@ -1,34 +1,51 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+// productSlice.js
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  products:[],
-  loading:false
-}
+  products: [],
+  product: {},
+  loading: false,
+};
+
 export const fetchProductData = createAsyncThunk('productData', async () => {
   try {
-    const response = await axios.get('https://fakestoreapiserver.reactbd.com/products');
-    return response.data; // Veya veriyi işleyerek döndürün
+    const response = await axios.get('http://localhost:3000/products');
+    return response.data;
   } catch (error) {
-    throw error; // Hata durumunda hata nesnesini fırlatın
+    throw error;
   }
 });
-export const productSlice = createSlice({
-  name: 'counter',
-  initialState,
-  reducers: {
-  },
-  extraReducers:(builder)=>{
-      builder.addCase(fetchProductData.pending,(state,action)=>{
-          state.loading=true
-      })
-      builder.addCase(fetchProductData.fulfilled,(state,action)=>{
-        state.loading=false
-        state.products=action.payload
-    })
+
+export const getProductDetails = createAsyncThunk('productDetail', async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:3000/products/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
-})
+});
 
-// Action creators are generated for each case reducer function
+export const productSlice = createSlice({
+  name: 'DataProduct',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchProductData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+    });
+    builder.addCase(getProductDetails.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getProductDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    });
+  },
+});
 
-export default productSlice.reducer
+export default productSlice.reducer;
