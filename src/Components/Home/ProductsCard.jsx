@@ -28,20 +28,20 @@ export default function ProductsCard() {
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-w-[400px] mt-6 sm:max-w-[1100px] md:max-w-[1440px] gap-3 mx-auto">
-            {products.slice(0, 4).map((product, i) => (
+            {products.slice(0, 8).map((product, i) => (
               <div
                 key={i} 
-                className="flex group  w-full  group-hover:scale-120 items-center flex-col"
+                className="flex group group-hover:scale-120 items-center flex-col"
               >
                 <img
                   onClick={() => navigate(`/detail/${product.id}`)}
-                  className="object-cover h-full w-80  cursor-pointer duration-500 "
+                  className="object-cover w-full cursor-pointer duration-500 h-full"
                   src={product.image}
                   alt={product.title}
                 />
               
                 <div className="w-full">
-                  <div className="flex justify-between h-16 p-2 border-gray-300 border items-center">
+                  <div className="flex justify-between bg-white h-16 p-2 border-gray-300 border items-center">
                     <div>
                       <h2 className="font-titleFont md:text-lg text-base font-bold">
                         {product.title.substring(0, 14)}
