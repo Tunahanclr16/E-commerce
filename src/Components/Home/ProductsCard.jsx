@@ -20,15 +20,15 @@ export default function ProductsCard() {
       ) : (
         <>
           <div className="text-center">
-            <h1 className="text-xl xs:text-2xl bg-black text-white py-2 w-52 xs:w-80 text-center mx-auto mt-4">
-              shopping everyday
+            <h1 className= " sm:text-2xl  text-xl md:text-4xl text-black  py-2 w-52 sm:w-[750px] text-center mx-auto mt-4">
+            New Arrival Products
             </h1>
             <Link className="text-blue-500 underline text-xs text-center mx-auto">
               All Products
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-w-[400px] mt-6 sm:max-w-[1100px] md:max-w-[1440px] gap-3 mx-auto">
-            {products.slice(0, 8).map((product, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-w-[400px] mt-6 sm:max-w-[1100px] md:max-w-full gap-3 mx-auto">
+            {products.slice(0,12).map((product, i) => (
               <div
                 key={i} 
                 className="flex group group-hover:scale-120 items-center flex-col"
