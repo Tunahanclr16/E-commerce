@@ -7,8 +7,7 @@ import { CiSearch } from "react-icons/ci";
 import { BsBag } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { modalFunc, openModal } from "../redux/modalSlice";
-import Modal from "../ui/Modal";
-
+import Modal from "../Components/Modal/Modal";
 export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   const { modal } = useSelector((state) => state.modal);
@@ -21,7 +20,7 @@ export default function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white h-24 border-b-[2px] border-b-gray-200">
+    <div className="bg-white h-24 z-50 border-b-[2px] border-b-gray-200">
       <div className="flex justify-between h-full items-center sm:max-w-[1280px] md:max-w-[1440px] mx-auto">
         <div className="flex justify-center gap-2 items-center p-3 ">
           <FaBars
@@ -73,7 +72,7 @@ export default function Navbar() {
             className="cursor-pointer "
           />
           <div className="">
-            {modal && <Modal />}
+            {modal && <Modal title={"Product Search"} />}
             {modal && (
               <div className="fixed top-0 left-0 w-full z-10 h-full bg-black/50 "></div>
             )}
