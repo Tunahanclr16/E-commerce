@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 body{
-    background-color: #f0f0f0;
+    background-color: #fff;
     height: 100vh;
     margin: 0;
     box-sizing: border-box;
  }
+ 
