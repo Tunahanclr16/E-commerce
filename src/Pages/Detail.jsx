@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetails } from "../redux/productSlice";
 import ProductDetail from "../Components/Detail/ProductDetail";
+import Loading from "../ui/Loading";
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,16 +21,16 @@ const Detail = () => {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <>
-        <div className="h-full ">
-        <ProductDetail product={product} />
-        </div>
+          <div className="h-full ">
+            <ProductDetail product={product} />
+          </div>
         </>
       )}
     </div>
-  );  
+  );
 };
 
 export default Detail;

@@ -69,7 +69,7 @@ export default function Navbar() {
           <CiSearch
             onClick={() => dispatch(modalFunc())}
             size={22}
-            className="cursor-pointer "
+            className="cursor-pointer"
           />
           <div className="">
             {modal && <Modal title={"Product Search"} />}

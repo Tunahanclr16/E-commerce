@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductData } from "../../redux/productSlice";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../../ui/Loading";
 
 export default function ProductsCard() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function ProductsCard() {
   return (  
     <div className="">
       {loading ? (
-        <p>Loading...</p>
+        <Loading/>
       ) : (
         <>
           <div className="text-center">
