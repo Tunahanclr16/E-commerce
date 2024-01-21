@@ -1,32 +1,41 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import validationSchema from "../../validations/register-validation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function RegisterContent() {
+    const navigate=useNavigate()
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      displayName: "", // Eklediğimiz displayName alanı
+      name: "", // Eklediğimiz displayName alanı
     },
     validationSchema: validationSchema,
-    onSubmit: async (values, actions) => {
+  onSubmit: async (values, actions) => {
       try {
         // Kullanıcı kaydını oluştur
         const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
         // Kullanıcı adını güncelle
-        await updateProfile(userCredential.user, { displayName: values.displayName });
+        await updateProfile(userCredential.user, { displayName: values.name });
         // Formu resetle
         formik.resetForm();
-        console.log("Registration successful!");
+        // Başarılı kayıt mesajını göster
+        toast.success("Registration was successful, you are directed to the login page!");
+        // /login sayfasına yönlendir
+        setTimeout(() => {
+            navigate('/login');
+          }, 2500);
       } catch (error) {
         console.error("Registration error:", error.code, error.message);
       }
     },
   });
+
   return (
     <div className="flex flex-col justify-center items-center h-[500px] p-2 bg-gray-100">
       <div className="bg-white w-full sm:w-96 p-8 rounded-md shadow-md">
@@ -85,6 +94,7 @@ export default function RegisterContent() {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 }
