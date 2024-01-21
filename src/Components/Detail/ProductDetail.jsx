@@ -17,12 +17,12 @@ export default function ProductDetail({product}) {
 <div className='flex max-w-[1440px] mx-auto justify-center items-center h-screen'>
             <div className='flex  sm:flex-row  flex-col items-center'>
                 <div className="mx-auto">
-                <img className=" h-[340px] w-full xs:h-[400px] mx-auto   md:h-[650px] object-cover" src={product.image} alt="" />
+                <img className=" h-[300px] w-full xs:h-[400px] mx-auto   md:h-[650px] object-cover" src={product.image} alt="" />
                 </div>
                 <div className='p-2 text-center md:text-left '>
                     <h1 className='text-black font-bold text-3xl'>{product.title}</h1>
                     <p className=' mt-2 md:text-left text-center  text-gray-500  sm:max-w-[400px]'> {product.description}</p>
-                    <div className='flex mt-10 gap-2  items-center  w-32  h-9'>
+                    <div className='flex mt-10 gap-2 justify-center sm:justify-start sm:mx-0 mx-auto  items-center  w-32  h-9'>
                        <div className="mx-auto border  border-gray-800 rounded-md p-2  flex items-center justify-center ">
                         <p className="text-lg">QUANTİTY</p>
                        <span onClick={increment} className='text-2xl cursor-pointer'>+</span>

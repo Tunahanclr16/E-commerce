@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { BsBag } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,8 +47,8 @@ export default function Navbar() {
               />
             </div>
             <ul className="flex flex-col items-center font-medium text-2xl mt-20 gap-4">
-              <li>Home</li>
-              <li>Products</li>
+              <NavLink to={'/'}>Home</NavLink>
+              <NavLink to={'/products'}>Products</NavLink>
               <li>Shop</li>
               <li>Blog</li>
             </ul>
@@ -59,8 +59,8 @@ export default function Navbar() {
         </div>
         <div className="hidden sm:flex">
           <ul className="flex items-center p-3 text-sm md:text-lg font-medium cursor-pointer gap-4 md:gap-10">
-            <li>Home</li>
-            <li>Products</li>
+          <NavLink to={'/'}>Home</NavLink>
+              <NavLink to={'/products'}>Products</NavLink>
             <li>Shop</li>
             <li>Blog</li>
           </ul>
@@ -71,12 +71,7 @@ export default function Navbar() {
             size={22}
             className="cursor-pointer"
           />
-          <div className="">
-            {modal && <Modal title={"Product Search"} />}
-            {modal && (
-              <div className="fixed top-0 left-0 w-full z-10 h-full bg-black/50 "></div>
-            )}
-          </div>
+       
           <Link to={"/cart"}>
             <BsBag size={22} className="cursor-pointer " />
           </Link>
@@ -86,15 +81,21 @@ export default function Navbar() {
               className="cursor-pointer"
               onClick={() => setUserMenuOpen(!userMenuOpen)}
             />
+               <div className="">
+            {modal && <Modal title={"Product Search"} />}
+            {modal && (
+              <div className="fixed top-0 left-0 w-full z-10 h-full bg-black/50 "></div>
+            )}
+          </div>
             {userMenuOpen && (
               <div className="origin-top-right z-10 cursor-pointer absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-2 ring-black ring-opacity-5">
                 <div className="py-1">
-                  <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <NavLink onClick={()=>setUserMenuOpen(false)} to={'/login'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Login
-                  </p>
-                  <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  </NavLink>
+                  <NavLink onClick={()=>setUserMenuOpen(false)} to={'/register'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Register
-                  </p>
+                  </NavLink>
                 </div>
               </div>
             )}
