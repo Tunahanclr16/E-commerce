@@ -16,7 +16,6 @@ const Detail = () => {
     }
   }, [dispatch, id]);
 
-  console.log(loading, product);
 
   return (
     <div>

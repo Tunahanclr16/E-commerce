@@ -17,7 +17,7 @@ export default function ProductDetail({product}) {
 <div className='flex max-w-[1440px] mx-auto justify-center items-center h-screen'>
             <div className='flex  sm:flex-row  flex-col items-center'>
                 <div className="mx-auto">
-                <img className=" h-[300px] w-full xs:h-[400px] mx-auto   md:h-[650px] object-cover" src={product.image} alt="" />
+                <img className=" h-[300px] sm:max-w-[250px] md:max-w-[550px] xs:h-[400px] mx-auto   md:h-[650px] object-contain" src={product.image} alt="" />
                 </div>
                 <div className='p-2 text-center md:text-left '>
                     <h1 className='text-black font-bold text-3xl'>{product.title}</h1>

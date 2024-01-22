@@ -1,46 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductData } from "../../redux/productSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../ui/Loading";
+import Sorting from "./Sorting";
 
 export default function ProductsCard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.products);
+  // useEffect ve useState hook'larından gelen state.
+  const [sortingOption, setSortingOption] = useState("");
 
+  // useEffect hook'u, component'in ilk render edildiğinde
+  // ve sortingOption değiştiğinde çalışacak.
   useEffect(() => {
+    // Ürün verilerini Redux üzerinden getiren fonksiyonu çağır.
     dispatch(fetchProductData());
   }, [dispatch]);
-  console.log(products)
 
-  return (  
+  // Ürünleri sıralamak için klon bir array oluştur.
+  const sortedProducts = [...products];
+
+  // Eğer sortingOption değeri "increasing" ise, ürünleri artan fiyat sırasına göre sırala.
+  if (sortingOption === "increasing") {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  }
+  // Eğer sortingOption değeri "decreasing" ise, ürünleri azalan fiyat sırasına göre sırala.
+  else if (sortingOption === "decreasing") {
+    sortedProducts.sort((a, b) => b.price - a.price);
+  }
+
+  // Kullanıcının sıralama seçeneğini değiştirmesini takip eden fonksiyon.
+  const handleSortingChange = (e) => {
+    // Seçilen sıralama seçeneğini state'e kaydet.
+    setSortingOption(e.target.value);
+  };
+
+  return (
     <div className="">
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
           <div className="text-center">
-            <h1 className= " sm:text-2xl  text-xl md:text-4xl text-black  py-2 w-52 sm:w-[750px] text-center mx-auto mt-4">
-            New Arrival Products
+            <h1 className=" sm:text-2xl  text-xl md:text-4xl text-black  py-2 w-52 sm:w-[750px] text-center mx-auto mt-4">
+              New Arrival Products
             </h1>
             <Link className="text-blue-500 underline text-xs text-center mx-auto">
               All Products
             </Link>
+            <Sorting handleSortingChange={handleSortingChange} />
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-w-[400px] mt-6 sm:max-w-[1100px] md:max-w-full gap-3 mx-auto">
-            {products.slice(0,12).map((product, i) => (
+            {sortedProducts.slice(0, 12).map((product, i) => (
               <div
-                key={i} 
+                key={i}
                 className="flex group group-hover:scale-120 items-center flex-col"
               >
                 <img
                   onClick={() => navigate(`/detail/${product.id}`)}
-                  className="object-cover w-full cursor-pointer duration-500 h-full"
+                  className="object-contain w-72 h-full cursor-pointer duration-500 "
                   src={product.image}
                   alt={product.title}
                 />
-              
+
                 <div className="w-full">
                   <div className="flex justify-between bg-white h-16 p-2 border-gray-300 border items-center">
                     <div>
@@ -81,8 +105,14 @@ export default function ProductsCard() {
               </div>
             ))}
           </div>
+          <Link
+            className=" mt-4 text-lg font-semibold hover:underline text-blue-500 flex justify-center"
+            to={"/products"}
+          >
+            All Products
+          </Link>
         </>
       )}
     </div>
   );
-} 
+}
