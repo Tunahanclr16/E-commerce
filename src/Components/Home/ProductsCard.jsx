@@ -4,14 +4,15 @@ import { fetchProductData } from "../../redux/productSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../ui/Loading";
 import Sorting from "./Sorting";
+import ReactPaginate from "react-paginate";
 
 export default function ProductsCard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.products);
-  // useEffect ve useState hook'larından gelen state.
   const [sortingOption, setSortingOption] = useState("");
-
+  const [currentPage, setCurrentPage] = useState(0); // Başlangıç sayfası 0'dır.
+  const productsPerPage = 8;
   // useEffect hook'u, component'in ilk render edildiğinde
   // ve sortingOption değiştiğinde çalışacak.
   useEffect(() => {
@@ -37,6 +38,20 @@ export default function ProductsCard() {
     setSortingOption(e.target.value);
   };
 
+  //paginate start
+  // Sayfa başına gösterilecek ürünleri filtrele
+
+  // Sayfa başına gösterilecek ürünleri filtrele
+  const indexOfLastProduct = (currentPage + 1) * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = sortedProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
   return (
     <div className="">
       {loading ? (
@@ -47,13 +62,10 @@ export default function ProductsCard() {
             <h1 className=" sm:text-2xl  text-xl md:text-4xl text-black  py-2 w-52 sm:w-[750px] text-center mx-auto mt-4">
               New Arrival Products
             </h1>
-            <Link className="text-blue-500 underline text-xs text-center mx-auto">
-              All Products
-            </Link>
             <Sorting handleSortingChange={handleSortingChange} />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-w-[400px] mt-6 sm:max-w-[1100px] md:max-w-full gap-3 mx-auto">
-            {sortedProducts.slice(0, 12).map((product, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-w-[400px] mt-3 sm:max-w-[1100px] md:max-w-full gap-3 mx-auto">
+            {currentProducts.map((product, i) => (
               <div
                 key={i}
                 className="flex group group-hover:scale-120 items-center flex-col"
@@ -75,9 +87,6 @@ export default function ProductsCard() {
                     </div>
                     <div className="text-sm relative w-28 flex justify-end overflow-hidden">
                       <div className="flex gap-2 transform group-hover:translate-x-24 transition-transform duration-500">
-                        <p className="line-through text-gray-500">
-                          ${product.oldPrice}
-                        </p>
                         <p className="font-semibold">${product.price}</p>
                       </div>
                       <p className="absolute z-20 w-[100px] text-gray-500 hover:text-gray-900 flex items-center gap-1 top-0 transform -translate-x-32 group-hover:translate-x-0 transition-transform cursor-pointer duration-500">
@@ -105,12 +114,24 @@ export default function ProductsCard() {
               </div>
             ))}
           </div>
-          <Link
-            className=" mt-4 text-lg font-semibold hover:underline text-blue-500 flex justify-center"
-            to={"/products"}
-          >
-            All Products
-          </Link>
+          <div className="flex items-center p-4 justify-end mt-4">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=" >"
+              onPageChange={handlePageChange}
+              pageRangeDisplayed={5}
+              pageCount={Math.ceil(sortedProducts.length / productsPerPage)}
+              previousLabel="< "
+              renderOnZeroPageCount={null}
+              containerClassName={"pagination flex gap-2"}
+              subContainerClassName={"pages pagination flex gap-2"}
+              activeClassName={"active bg-blue-500 w-12 text-center text-white"}
+              pageClassName={"rounded-full cursor-pointer transition-colors duration-300"}
+              previousClassName={"rounded-full text-lg cursor-pointer transition-colors duration-300"}
+              nextClassName={"rounded-full text-lg cursor-pointer transition-colors duration-300"}
+              breakClassName={"rounded-full cursor-pointer transition-colors duration-300"}
+            />
+          </div>
         </>
       )}
     </div>
