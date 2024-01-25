@@ -5,11 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../ui/Loading";
 import Sorting from "./Sorting";
 import ReactPaginate from "react-paginate";
+import {addTocart } from "../../redux/cartSlice";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
 
 export default function ProductsCard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.products);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [sortingOption, setSortingOption] = useState("");
   const [currentPage, setCurrentPage] = useState(0); // Başlangıç sayfası 0'dır.
   const productsPerPage = 8;
@@ -52,6 +58,39 @@ export default function ProductsCard() {
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+
+    // Clean up
+    return () => unsubscribe();
+  }, []); // Sadece bir kez çalıştırılması için boş bir dependency array kullanılır
+
+  const addToBasket = (product) => {
+    if (isAuthenticated) {
+      // Sepete ekleme işlemleri
+        dispatch(addTocart({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          image: product.image,
+          quantity: 1,
+        }))
+      toast.success(`Added to Cart: ${product.title}`);
+    } else {
+      // Kullanıcı giriş yapmadıysa
+      toast.error("Please log in");
+    }
+  };
+  
+
+
+
   return (
     <div className="">
       {loading ? (
@@ -89,7 +128,7 @@ export default function ProductsCard() {
                       <div className="flex gap-2 transform group-hover:translate-x-24 transition-transform duration-500">
                         <p className="font-semibold">${product.price}</p>
                       </div>
-                      <p className="absolute z-20 w-[100px] text-gray-500 hover:text-gray-900 flex items-center gap-1 top-0 transform -translate-x-32 group-hover:translate-x-0 transition-transform cursor-pointer duration-500">
+                      <p onClick={()=>addToBasket(product)} className="absolute z-20 w-[100px] text-gray-500 hover:text-gray-900 flex items-center gap-1 top-0 transform -translate-x-32 group-hover:translate-x-0 transition-transform cursor-pointer duration-500">
                         add to cart
                         <span>
                           <svg
@@ -134,6 +173,17 @@ export default function ProductsCard() {
           </div>
         </>
       )}
-    </div>
+<ToastContainer
+position="top-right"
+autoClose={1000}
+hideProgressBar
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>    </div>
   );
 }
