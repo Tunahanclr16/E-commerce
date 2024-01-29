@@ -65,12 +65,12 @@ useEffect(() => {
               <IoClose
                 onClick={()=>toggleNav()}
                 size={30}
-                className="cursor-pointer"
+                className="cursor-poi nter"
               />
             </div>
             <ul className="flex flex-col items-center font-medium text-2xl mt-20 gap-4">
               <NavLink to={"/"}>Home</NavLink>
-              <NavLink to={"/products"}>Products</NavLink>
+              <li >Products</li>
               <li>Shop</li>
               <li>Blog</li>
             </ul>
@@ -94,7 +94,7 @@ useEffect(() => {
             className="cursor-pointer"
           />
 <div className="relative">
-<Link to={"/cart"}>
+<Link className="flex items-center" to={"/cart"}>
             <BsBag size={22} className="cursor-pointer " />
               <span className="absolute cursor-pointer right-2 left-2 text-black font-bold text-sm top-1">{carts.length}</span>
               </Link>
