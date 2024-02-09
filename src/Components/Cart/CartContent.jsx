@@ -37,7 +37,7 @@ const CartContent = () => {
         <p className="text-center">Your cart is empty.</p>
       ) : (
         
-        <div className="bg-white overflow-auto p-4 rounded-lg shadow-lg">
+        <div className= " overflow-auto bg-white p-4 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-4">Shopping Cart</h1>
           <div className="flex justify-end">
             <button
