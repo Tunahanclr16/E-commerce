@@ -16,13 +16,13 @@ export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   const { modal } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
-  const {carts}=useSelector((state)=>state.carts)
-console.log(carts)
-useEffect(() => {
-  dispatch(getCartTotal());
-}, [dispatch]);
+  const { carts } = useSelector((state) => state.carts);
+  console.log(carts);
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, [dispatch]);
 
-// ...
+  // ...
 
   const toggleNav = () => {
     setNavOpen(!navOpen);
@@ -34,7 +34,7 @@ useEffect(() => {
     // Sign out the user
     signOut(auth)
       .then(() => {
-          window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         // Handle logout error
@@ -47,13 +47,13 @@ useEffect(() => {
         <div className="flex justify-center gap-2 items-center p-3 ">
           <FaBars
             size={20}
-            onClick={()=>toggleNav()}
+            onClick={() => toggleNav()}
             className="flex items-center cursor-pointer sm:hidden"
           />
           {navOpen && (
             <div
               className="fixed top-0 left-0 w-full z-10 h-full bg-black/50 "
-              onClick={()=>toggleNav()}
+              onClick={() => toggleNav()}
             ></div>
           )}
           <div
@@ -63,14 +63,14 @@ useEffect(() => {
           >
             <div className="flex items-end p-4">
               <IoClose
-                onClick={()=>toggleNav()}
+                onClick={() => toggleNav()}
                 size={30}
                 className="cursor-poi nter"
               />
             </div>
             <ul className="flex flex-col items-center font-medium text-2xl mt-20 gap-4">
               <NavLink to={"/"}>Home</NavLink>
-              <li >Products</li>
+              <li>Products</li>
               <li>Shop</li>
               <li>Blog</li>
             </ul>
@@ -93,13 +93,14 @@ useEffect(() => {
             size={22}
             className="cursor-pointer"
           />
-<div className="relative">
-<Link className="flex items-center" to={"/cart"}>
-            <BsBag size={22} className="cursor-pointer " />
-              <span className="absolute cursor-pointer right-2 left-2 text-black font-bold text-sm top-1">{carts.length}</span>
-              </Link>
-
-</div>
+          <div className="relative">
+            <Link className="flex items-center" to={"/cart"}>
+              <BsBag size={22} className="cursor-pointer " />
+              <span className="absolute cursor-pointer right-2 left-2 text-black font-bold text-sm top-1">
+                {carts.length}
+              </span>
+            </Link>
+          </div>
           <div className="relative inline-block text-left">
             <CiUser
               size={22}

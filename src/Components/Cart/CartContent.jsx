@@ -28,7 +28,7 @@ const CartContent = () => {
   }, []);
 
   return (
-    <div className="overflow-auto p-4 h-screen">
+    <div className="p-4 overflow-auto  h-screen">
       {!isAuthenticated ? (
         <p className="text-black text-center font-bold text-xl sm:text-2xl md:text-5xl">
           Please log in to view your cart.
