@@ -82,7 +82,7 @@ export default function Navbar() {
         <div className="hidden sm:flex">
           <ul className="flex items-center p-3 text-sm md:text-lg font-medium cursor-pointer gap-4 md:gap-10">
             <NavLink to={"/"}>Home</NavLink>
-            <NavLink to={"/products"}>Products</NavLink>
+            <NavLink to={"/"}>Products</NavLink>
             <li>Shop</li>
             <li>Blog</li>
           </ul>
