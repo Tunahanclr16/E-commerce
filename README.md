@@ -1,5 +1,4 @@
-# E-Commerce Front-End Project
-
+# E-Commerce Project
 **This project is developed to create the front-end part of an e-commerce platform using technologies like React, Firebase, Redux Toolkit, axios, and React Icons.**
 
 ## Features
